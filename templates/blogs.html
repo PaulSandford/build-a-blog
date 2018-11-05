@@ -14,12 +14,13 @@
 
         <ul>
             {% for blog in blogs %}
-            <li>{{blog.name}}
+            <li>{{blog.title}}
                 <form method="POST" action="/delete-blog" style="display:inline-block;">
                     <input type="hidden" name="blog-id" value="{{blog.id}}" />
                     <input type="submit" value="Delete" />
                 </form>
             </li>
+            <li>{{blog.body}}</li>
             {% endfor %}
         </ul>
 
@@ -31,7 +32,9 @@
 
     <ul>
         {% for blog in completed_blogs %}
-        <li>{{blog.name}}</li>
+        <li>{{blog.title}}</li>
+        <li>{{blog.body}}</li>
+        <br/>
         {% endfor %}
     </ul>
 

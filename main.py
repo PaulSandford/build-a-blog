@@ -11,11 +11,12 @@ db = SQLAlchemy(app)
 class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120))
-    completed = db.Column(db.Boolean)
+    title = db.Column(db.String(60))
+    body = db.Column(db.String(255))
+    
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, title):
+        self.title = title
         self.completed = False
 
 
@@ -27,27 +28,26 @@ def index():
     blogs = Blog.query.filter_by(completed=False).all()
     completed_blogs = Blog.query.filter_by(completed=True).all()
     return render_template('blogs.html',title="Build-a-Blog", 
-        blogs=blogs, completed_blogs=completed_blogs)
+        blogs=blogs)
 
-@app.rout('/add-blog', methods=['POST'])
+@app.route('/add-blog', methods=['POST'])
 def add_blog():
-    blog_name = request.form['blog']
-    new_blog = Blog(blog_name)
+    blog_title = request.form['blog']
+    new_blog = Blog(blog_title)
     db.session.add(new_blog)
     db.session.commit()
     return redirect('/')
 
-@app.route('/delete-blog', methods=['POST'])
+@app.route('/delete-blog', methods=['POST'])#REVISIT to correctly Delete
 def delete_blog():
 
     blog_id = int(request.form['blog-id'])
     blog = Blog.query.get(blog_id)
-    blog.completed = True
     db.session.add(blog)
     db.session.commit()
 
     return redirect('/')
 
 
-if __name__ == '__main__':
+if __title__ == '__main__':
     app.run()
