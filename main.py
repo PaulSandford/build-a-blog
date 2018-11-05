@@ -21,18 +21,21 @@ class Blog(db.Model):
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-
     if request.method == 'POST':
-        blog_name = request.form['blog']
-        new_blog = blog(blog_name)
-        db.session.add(new_blog)
-        db.session.commit()
+        return render_template('addblog.html',title="Build-a-Blog")
 
     blogs = Blog.query.filter_by(completed=False).all()
     completed_blogs = Blog.query.filter_by(completed=True).all()
     return render_template('blogs.html',title="Build-a-Blog", 
         blogs=blogs, completed_blogs=completed_blogs)
 
+@app.rout('/add-blog', methods=['POST'])
+def add_blog():
+    blog_name = request.form['blog']
+    new_blog = Blog(blog_name)
+    db.session.add(new_blog)
+    db.session.commit()
+    return redirect('/')
 
 @app.route('/delete-blog', methods=['POST'])
 def delete_blog():

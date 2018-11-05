@@ -1,16 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Add a Blog</h1>
-    <form method='post'>
-        <label>
-            New Blog:
-            <input type="text" name='blog' />
-        </label>
-        <input type="submit" value='Add Blog' />
+    
+    <form method="POST" action="/" style="display:inline-block;">
+        <!--<input type="hidden" name="add-blog" value=True /> may be used for user later-->
+        <input type="submit" value="Add a Blog" />
     </form>
-
-    <hr />
+    
 
     {% if blogs|length == 0 %}
     <p>No blogs yet</p>
@@ -21,7 +17,7 @@
             <li>{{blog.name}}
                 <form method="POST" action="/delete-blog" style="display:inline-block;">
                     <input type="hidden" name="blog-id" value="{{blog.id}}" />
-                    <input type="submit" value="Done!" />
+                    <input type="submit" value="Delete" />
                 </form>
             </li>
             {% endfor %}
