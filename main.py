@@ -22,10 +22,6 @@ class Blog(db.Model):
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if request.method == 'POST':
-        if request.form['add-blog' == True]:
-            return render_template('addblog.html',title="Build-a-Blog")
-
     return redirect('/blog')
 
 @app.route('/blog')
@@ -35,10 +31,24 @@ def blog():
     return render_template('blogs.html',title="Build-a-Blog", 
         blogs=blogs)
 
+@app.route('/addblog')
+def addblog():
+    return render_template('addblog.html',title="Build-a-Blog")
+
 @app.route('/newpost', methods=['POST'])
 def add_blog():
     blog_title = request.form['title']
     blog_body = request.form['body']
+    body_error = ""
+    title_error = ""
+
+    if blog_title == "":
+        title_error = "Give your blog a title"
+    if blog_body == "":
+        body_error = "Tell us something"
+    if body_error == "" or title_error == "":
+        return render_template("addblog.html",title="Build-a-Blog",body_error=body_error,title_error=title_error,blog_title=blog_title,blog_body=blog_body)
+
     new_blog = Blog(blog_title, blog_body)
     db.session.add(new_blog)
     db.session.commit()

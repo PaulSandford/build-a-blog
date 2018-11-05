@@ -5,21 +5,22 @@
     
     
 
-    {% if blog|length == 0 %}
+    {% if blogs|length == 0 %}
     <p>No blogs yet</p>
     {% else %}
 
-        <ul>
-            {% for blg in blog %}
-            <li>{{blg.title}}
-                <form method="POST" action="/delete-blog" style="display:inline-block;">
+        <table >
+            {% for blog in blogs %}
+            <tr><th>{{blog.title}}</th>
+                <td><form method="POST" action="/delete-blog" style="display:intrne-block;">
                     <input type="hidden" name="blog-id" value="{{blog.id}}" />
                     <input type="submit" value="Delete" />
-                </form>
-            </li>
-            <li>{{blg.body}}</li>
+                </form></td>
+            </tr>
+            <tr><td>{{blog.body}}</td></tr>
             {% endfor %}
-        </ul>
+        </table>
+        <br>
 
     {% endif %}
 

@@ -6,14 +6,8 @@
 <body>
     <header>
         <nav>
-            <form method="POST" action="/" style="display:inline-block;">
-                <input type="hidden" name="add-blog" value=True />
-                <input type="submit" value="Add a Blog" />
-            </form>
-            <form method="POST" action="/blog" style="display:inline-block;">
-                <input type="hidden" name="add-blog" value=False />
-                <input type="submit" value="View Blogs" />
-            </form>
+            <a href="http://127.0.0.1:5000/addblog">Add Blog</a>
+            <a href="http://127.0.0.1:5000/blog">View Blogs</a>
         </nav>
     </header>
     {% block content %}
