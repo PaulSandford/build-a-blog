@@ -15,39 +15,45 @@ class Blog(db.Model):
     body = db.Column(db.String(255))
     
 
-    def __init__(self, title):
+    def __init__(self, title, body):
         self.title = title
-        self.completed = False
+        self.body = body
 
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
-        return render_template('addblog.html',title="Build-a-Blog")
+        if request.form['add-blog' == True]:
+            return render_template('addblog.html',title="Build-a-Blog")
 
-    blogs = Blog.query.filter_by(completed=False).all()
-    completed_blogs = Blog.query.filter_by(completed=True).all()
+    return redirect('/blog')
+
+@app.route('/blog')
+def blog():
+    blogs = Blog.query.all()
+    
     return render_template('blogs.html',title="Build-a-Blog", 
         blogs=blogs)
 
-@app.route('/add-blog', methods=['POST'])
+@app.route('/newpost', methods=['POST'])
 def add_blog():
-    blog_title = request.form['blog']
-    new_blog = Blog(blog_title)
+    blog_title = request.form['title']
+    blog_body = request.form['body']
+    new_blog = Blog(blog_title, blog_body)
     db.session.add(new_blog)
     db.session.commit()
-    return redirect('/')
+    return redirect('/blog')
 
-@app.route('/delete-blog', methods=['POST'])#REVISIT to correctly Delete
+@app.route('/delete-blog', methods=['POST'])
 def delete_blog():
 
     blog_id = int(request.form['blog-id'])
     blog = Blog.query.get(blog_id)
-    db.session.add(blog)
+    db.session.delete(blog)
     db.session.commit()
 
-    return redirect('/')
+    return redirect('/blog')
 
 
-if __title__ == '__main__':
+if __name__ == '__main__':
     app.run()

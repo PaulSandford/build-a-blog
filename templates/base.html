@@ -4,7 +4,18 @@
         <title>{{title}}</title>
     </head>
 <body>
-
+    <header>
+        <nav>
+            <form method="POST" action="/" style="display:inline-block;">
+                <input type="hidden" name="add-blog" value=True />
+                <input type="submit" value="Add a Blog" />
+            </form>
+            <form method="POST" action="/blog" style="display:inline-block;">
+                <input type="hidden" name="add-blog" value=False />
+                <input type="submit" value="View Blogs" />
+            </form>
+        </nav>
+    </header>
     {% block content %}
     {% endblock %}
 
