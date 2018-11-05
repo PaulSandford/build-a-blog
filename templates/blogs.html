@@ -11,7 +11,7 @@
 
         <table >
             {% for blog in blogs %}
-            <tr><th>{{blog.title}}</th>
+            <tr><th><a href="{{ url_for('blog', blog_id=blog.id)}}">{{blog.title}}</a></th>
                 <td><form method="POST" action="/delete-blog" style="display:intrne-block;">
                     <input type="hidden" name="blog-id" value="{{blog.id}}" />
                     <input type="submit" value="Delete" />
