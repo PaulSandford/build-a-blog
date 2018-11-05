@@ -9,17 +9,18 @@
     <p>No blogs yet</p>
     {% else %}
 
+        
+        {% for blog in blogs %}
         <table >
-            {% for blog in blogs %}
             <tr><th><a href="{{ url_for('blog', blog_id=blog.id)}}">{{blog.title}}</a></th>
-                <td><form method="POST" action="/delete-blog" style="display:intrne-block;">
+                <td class='delete'><form  method="POST" action="/delete-blog" style="display:intrne-block;">
                     <input type="hidden" name="blog-id" value="{{blog.id}}" />
                     <input type="submit" value="Delete" />
                 </form></td>
             </tr>
             <tr><td>{{blog.body}}</td></tr>
-            {% endfor %}
         </table>
+        {% endfor %}
         <br>
 
     {% endif %}
